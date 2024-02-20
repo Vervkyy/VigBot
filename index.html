@@ -1,0 +1,441 @@
+<html lang="pl"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViGBot - Disocrd bot</title>
+  <style>
+    body {
+      background: linear-gradient(45deg, #1a1a1a, rgba(26, 26, 26, 0.288), rgba(26, 26, 26, 0.26));
+      background-size: 200% 200%;
+      animation: gradientAnimation 10s ease infinite;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+
+    .navbar span {
+      margin-right: 10px;
+    }
+
+    
+    .hidden {
+      display: none;
+    }
+
+   
+    .active-section {
+      display: block;
+    }
+
+    
+    .dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      transform-origin: center;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.6;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    button {
+      position: relative;
+      padding: 10px 20px;
+      border-radius: 7px;
+      border: 1px solid rgb(255, 61, 61);
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 2px;
+      background: transparent;
+      color: #fff;
+      overflow: hidden;
+      -webkit-box-shadow: 0 0 0 0 transparent;
+      box-shadow: 0 0 0 0 transparent;
+      -webkit-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in;
+    }
+
+    button:hover {
+      background: rgb(255, 61, 61);
+      -webkit-box-shadow: 0 0 30px 5px rgba(236, 0, 0, 0.815);
+      box-shadow: 0 0 30px 5px rgba(236, 0, 0, 0.815);
+      -webkit-transition: all 0.2s ease-out;
+      transition: all 0.2s ease-out;
+    }
+
+    button:hover::before {
+      -webkit-animation: sh02 0.5s 0s linear;
+      animation: sh02 0.5s 0s linear;
+    }
+
+    button::before {
+      content: '';
+      display: block;
+      width: 0px;
+      height: 86%;
+      position: absolute;
+      top: 7%;
+      left: 0%;
+      opacity: 0;
+      background: #fff;
+      -webkit-box-shadow: 0 0 50px 30px #fff;
+      box-shadow: 0 0 50px 30px #fff;
+      -webkit-transform: skewX(-20deg);
+      -ms-transform: skewX(-20deg);
+      transform: skewX(-20deg);
+    }
+
+    @-webkit-keyframes sh02 {
+      from {
+        opacity: 0;
+        left: 0%;
+      }
+      50% {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+        left: 100%;
+      }
+    }
+
+    @keyframes sh02 {
+      from {
+        opacity: 0;
+        left: 0%;
+      }
+      50% {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+        left: 100%;
+      }
+    }
+
+    button:active {
+      -webkit-box-shadow: 0 0 0 0 transparent;
+      box-shadow: 0 0 0 0 transparent;
+      -webkit-transition: box-shadow 0.2s ease-in;
+      -webkit-transition: -webkit-box-shadow 0.2s ease-in;
+      transition: -webkit-box-shadow 0.2s ease-in;
+      transition: box-shadow 0.2s ease-in;
+      transition: box-shadow 0.2s ease-in, -webkit-box-shadow 0.2s ease-in;
+    }
+
+    .section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.9s;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(45deg, #640101, rgb(73, 68, 2), rgb(0, 10, 70));
+      background-size: 200% 200%;
+      animation: gradientAnimation 10s ease infinite;
+    }
+
+    
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    
+    .active-link {
+      border-bottom: 2px solid #ffffff0c;
+    }
+
+    
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropbtn {
+      background-color: #000000;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .text-animation {
+  font-size: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #333; /* Kursor będący efektem pisania */
+  animation: typing 5s steps(40) infinite, blink-caret 1s infinite;
+}
+
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #333;
+  }
+}
+  </style>
+<style>
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .card {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+  </style></head>
+
+<body>
+  <nav class="navbar">
+    <span>ViGBot - Disocrd bot</span>
+    <center>
+      <div class="dropdown">
+        <button class="dropbtn">O bocie ▼</button>
+        <div class="dropdown-content">
+          <a href="#dev">Twórca</a>
+           <a href="#komendy">Komendy</a>
+            <a href="#log_new">Nowe wersje</a>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1208884831811932303&permissions=8&scope=bot">Dodaj bota na server dc</a>
+          </div>
+      </div>
+      <button onclick="location.href='https://discord.gg/bxjJggGZYu'">Server disocrd bota:)</button>
+
+      <!-- Nowa sekcja Projekty z rozwijanym menu -->
+
+      <!-- Koniec sekcji Projekty -->
+    </center>
+  </nav>
+  <center>
+    <section id="Home" class="section active-section">
+      <div>
+
+        <div class="text-animation" id="textAnimation"></div>
+        <div class="card" id="botInfo">
+          <h2>Informacje o bocie</h2>
+          <p>Bot Discord ViGBot jest obecny na <span id="serverCount">...</span> serwerach.</p>
+          <p>Obecna wersja: <span id="botVersion">...</span></p>
+        </div>
+        <button><a href="https://discord.com/api/oauth2/authorize?client_id=1208884831811932303&permissions=8&scope=bot">Dodaj bota na server dc</button></a>
+
+        <p></p>
+        <!--<button>Załóż konto</button>
+        <a href="#"><button>Zaloguj się</button></a>-->
+
+    <!--<h1>Strona nie może się załadować:(</h1>-->
+    <script>
+
+const text = "Witaj na stronie ViGbot'a:)";
+let charIndex = 0;  // Initialize charIndex to 0
+const textAnimation = document.getElementById("textAnimation");
+
+function typeWriter() {
+  if (charIndex < text.length) {
+    textAnimation.textContent += text.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeWriter, 150); // Adjust the timeout duration to slow down the animation (e.g., 150 milliseconds)
+  }
+}
+
+typeWriter(); // Start the animation
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Pobierz wszystkie sekcje
+  const sections = document.querySelectorAll('.section');
+
+  // Dodaj klasę „hidden” do wszystkich sekcji
+  sections.forEach(section => {
+    section.classList.add('hidden');
+  });
+
+  // Usuń klasę „hidden” z aktywnej sekcji (Home)
+  const homeSection = document.querySelector('#Home');
+  homeSection.classList.remove('hidden');
+
+  // Pobieramy wszystkie odnośniki nawigacji
+  const navLinks = document.querySelectorAll('.navbar a');
+
+  // Dla każdego odnośnika nawigacji dodajemy obsługę zdarzenia kliknięcia
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault(); // Zatrzymujemy domyślne zachowanie odnośnika
+
+      // Pobieramy wartość atrybutu href odnośnika
+      const targetId = link.getAttribute('href');
+
+      // Ukrywamy wszystkie sekcje
+      sections.forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      // Pobieramy element docelowy na podstawie wartości href
+      const targetElement = document.querySelector(targetId);
+
+      // Pokazujemy wybraną sekcję
+      targetElement.classList.remove('hidden');
+
+      // Przewijamy stronę do elementu docelowego z animacją
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      // Aktualizujemy tytuł strony na podstawie aktualnej sekcji
+      const sectionTitle = targetElement.querySelector('h1').innerText;
+      document.title = `VigBot - ${sectionTitle}`;
+
+      // Aktualizujemy menu nawigacji na podstawie aktualnej sekcji
+      navLinks.forEach(navLink => navLink.classList.remove('active-link'));
+      link.classList.add('active-link');
+    });
+  });
+
+  // Dodajemy animowane kropki do sekcji
+  sections.forEach(section => {
+    for (let i = 0; i < 50; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      section.appendChild(dot);
+      dot.style.left = `${Math.random() * 100}%`; // Losowa pozycja kropki
+      dot.style.top = `${Math.random() * 100}%`; // Losowa pozycja kropki
+    }
+  });
+
+  // Dodajemy animowane tło i kolory do wszystkich sekcji
+  const sectionStyles = document.createElement('style');
+  sectionStyles.innerHTML = `
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  `;
+
+  document.head.appendChild(sectionStyles);
+
+  // Dodajemy klasę „active-section” do pierwszej sekcji
+  const firstSection = document.querySelector('.section');
+  firstSection.classList.add('active-section');
+
+  // Aktualizujemy tytuł strony na podstawie pierwszej sekcji
+  const firstSectionTitle = firstSection.querySelector('h1').innerText;
+  document.title = `VigBot - ${firstSectionTitle}`;
+});
+</script>
+</center>
+<script>document.addEventListener("DOMContentLoaded", function () {
+  // Pobieramy informacje o bocie z serwera lub innego źródła
+  const serverCount = 2; // Przykładowa liczba serwerów
+  const botVersion = "0.1"; // Przykładowa wersja bota
+
+  // Aktualizujemy elementy HTML z informacjami o bocie
+  const serverCountElement = document.getElementById("serverCount");
+  const botVersionElement = document.getElementById("botVersion");
+
+  serverCountElement.textContent = serverCount;
+  botVersionElement.textContent = botVersion;
+});
+</script>
+
+</body></html>
